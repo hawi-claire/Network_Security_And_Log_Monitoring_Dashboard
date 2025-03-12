@@ -21,6 +21,7 @@ sudo systemctl enable grafana-server
 
 # Allow inbound traffic on port 3000
 sudo ufw allow 3000/tcp || echo "UFW command failed, continuing with the script..."
+sudo ufw allow 3100/tcp || echo "UFW command failed, continuing with the script..."
 
 'Step2: Installing Grafana Loki on Ubuntu'
 
