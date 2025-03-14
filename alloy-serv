@@ -1,0 +1,11 @@
+[Unit]
+Description=Alloy service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/alloy run --config.format=promtail /etc/promtail-local-config.yaml
+
+[Install]
+WantedBy=multi-user.target

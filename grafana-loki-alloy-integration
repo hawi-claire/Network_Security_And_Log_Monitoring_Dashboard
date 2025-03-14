@@ -84,22 +84,22 @@ sudo systemctl start loki.service
 sudo systemctl enable loki.service
 sudo systemctl status loki.service
 
-'Step3: Install Promtail Agent on Ubuntu'
+'Step3: Install Alloy Agent on Ubuntu'
 
-# Download Promtail binary file
-wget https://github.com/grafana/loki/releases/download/v3.4.2/promtail-linux-amd64.zip
+# Download alloy binary file
+wget https://github.com/grafana/alloy/releases/download/v1.7.4/alloy-linux-amd64.zip 
 
 # Unzip the downloaded file and remove the zip file
-unzip promtail-linux-amd64.zip
-rm promtail-linux-amd64.zip
+unzip alloy-linux-amd64.zip 
+rm alloy-linux-amd64.zip  
 
 # Move it to a directory to the PATH and confirm Promtail installation
-sudo mv promtail-linux-amd64 /usr/local/bin/promtail
-promtail --version
+sudo mv alloy-linux-amd64 /usr/local/bin/alloy
+alloy --version
 
 # Removing existing promtail-local-config.yaml and service file in case present
-sudo rm /etc/promtail-local-config.yaml
-sudo rm /etc/systemd/system/promtail.service
+sudo rm /etc/config.alloy
+sudo rm /etc/systemd/system/alloy.service
 
 # Gets the config files for Promtail and place it in /etc/promtail-local-config.yaml
 sudo wget -O /etc/promtail-local-config.yaml https://raw.githubusercontent.com/grafana/loki/v3.4.2/clients/cmd/promtail/promtail-docker-config.yaml
@@ -108,14 +108,15 @@ sudo wget -O /etc/promtail-local-config.yaml https://raw.githubusercontent.com/g
 sudo sed -i "s|http://localhost:3100/loki/api/v1/push|http://$server_ip:3100/loki/api/v1/push|g" /etc/promtail-local-config.yaml
 
 # Create a systemd service file for Loki to manage its execution
-cp prom-serv promtail.service
-sudo mv promtail.service /etc/systemd/system/
+cp alloy-serv alloy.service
+sudo mv alloy.service /etc/systemd/system/
 
 # Reload the systemd daemon to apply changes
 sudo systemctl daemon-reload
 
 # Start the Promtail service and check status
-sudo systemctl start promtail.service
-sudo systemctl status promtail.service
+sudo systemctl start alloy.service
+sudo systemctl enable alloy.service
+sudo systemctl status alloy.service
 
 # Till now we have installed the Grafana. Loki and Promtail on our system. So the next step is to configure the loki and start visualizing the data in Grafana.
