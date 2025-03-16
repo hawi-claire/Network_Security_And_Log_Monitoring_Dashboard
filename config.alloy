@@ -1,0 +1,89 @@
+// The Loki endpoint to send logs to
+loki.write "default" {
+  endpoint {
+    url     = "http://localhost:3100/loki/api/v1/push"
+    timeout = "30s"
+  }
+}
+
+// Specified paths to search logs at
+local.file_match "logs" {
+  path_targets = [
+    { __path__ = "/var/log/syslog", job = "syslogs" },
+    { __path__ = "/var/log/lastlog", job = "lastlogin_logs" },
+    { __path__ = "/var/log/wtmp", job = "user-login-logs" },
+    { __path__ = "/var/log/btmp", job = "failed-logins-logs" },
+    { __path__ = "/var/log/ufw.log", job = "ufw_logs" },
+    { __path__ = "/var/log/auth.log", job = "auth_logs" },
+    { __path__ = "/var/log/dpkg.log", job = "package_mgt_logs" },
+    { __path__ = "/var/log/alternatives.log", job = "symlink_updates_logs" },
+    { __path__ = "/var/log/kern.log", job = "kernel_logs" },
+    { __path__ = "/var/log/apt/*.log", job = "apt_logs" },
+    { __path__ = "/var/log/grafana/*.log", job = "grafana_logs" },
+    { __path__ = "/var/log/mysql/*.log", job = "mysql_logs" },
+    { __path__ = "/var/log/nginx*/*.log", job = "nginx_logs" },
+    { __path__ = "/var/log/apache*/*.log", job = "apache_logs" },
+    { __path__ = "/var/log/haproxy.log", job = "haproxy_logs" },
+    { __path__ = "/var/log/unattended-upgrades*/*.log", job = "automatic_updates.log" },
+    { __path__ = "/var/log/dist-upgrade/*.log", job = "os_upgrade_logs" },
+  ]
+}
+
+// Collect logs from matched files and forward to Loki
+loki.source.file "logs" {
+  targets    = local.file_match.logs.targets
+  forward_to = [loki.write.default.receiver]
+}
+
+// Systemd journal logs
+loki.source.journal "journal" {
+  max_age = "12h"
+  forward_to = [loki.write.default.receiver]
+  labels     = {job = "systemd-journal-logs",}
+}
+/*
+// Docker
+discovery.docker "docker_logs" {
+  host = "unix:///var/run/docker.sock"
+}
+
+discovery.relabel "docker_logs" {
+  targets = []
+
+  rule {
+    target_label = "job"
+    replacement = "integrations/docker"
+  }
+
+  rule {
+    target_label = "instance"
+    replacement = constants.hostname
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex = "/(.*)"
+    target_label = "container"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_log_stream"]
+    target_label = "stream"
+  }
+}
+
+loki.source.docker "docker_logs" {
+  host       = "unix:///var/run/docker.sock"
+  forward_to = [loki.write.default.receiver]
+}
+
+// Kubernetes
+discovery.kubernetes "pods" {
+  role = "pod"
+}
+
+loki.source.kubernetes "pods" {
+  targets    = discovery.kubernetes.pods.targets
+  forward_to = [loki.write.default.receiver]
+}
+*/
