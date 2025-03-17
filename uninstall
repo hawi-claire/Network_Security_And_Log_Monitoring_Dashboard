@@ -3,6 +3,7 @@
 
 # Stop services
 sudo systemctl stop grafana-server alloy loki mimir
+sudo systemctl daemon-reload
 
 # Deny connections top ports if not in use by other services
 sudo ufw deny 3000/tcp
