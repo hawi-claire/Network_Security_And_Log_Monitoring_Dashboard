@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Script to remove nslm from system
+
+# Stop services
+sudo systemctl stop grafana-server alloy loki mimir
+
+# Deny connections top ports if not in use by other services
+sudo ufw deny 3000/tcp
+sudo ufw deny 3100/tcp
+sudo ufw deny 9009/tcp
+
+# Removing the packages
+sudo apt-get remove --purge -y grafana alloy loki
+sudo apt autoremove -y
+
+sudo rm -rf /usr/bin/mimir
+
+# Removing service files
+services=("loki.service" "alloy.service" "mimir.service" "promtail.service")
+services_dir="/etc/systemd/system"
+
+for serv in "${services[@]}"; do
+    path="$services_dir/$serv"
+    if [ -f "$path" ]; then
+        sudo rm -f "$path"
+        echo "Removed $path"
+    else
+        echo "$path doesn't exist"
+    fi
+done
+
+# Remove config files
+config_files=("config.alloy" "loki-local-config.yaml" "mimir-local-config.yaml" "promtail-local-config.yaml")
+config_path="/etc"
+
+for config in "${config_files[@]}"; do
+    path="$config_path/$config"
+
+    if [ -f "$path" ]; then
+        sudo rm -f "$path"
+        echo "Remove $path"
+    else
+        echo "$path doesn't exist"
+    fi
+done
+# Remove redudant data
+sudo rm -rf /tmp/loki /tmp/mimir
+
+# Old method
+oldies=("loki" "alloy" "mimir" "promtail")
+oldies_path="/usr/local/bin"
+for old in "${oldies[@]}"; do
+    path="$oldies_path/$old"
+
+    if [ -f "$path" ]; then
+        sudo rm -f "$path"
+        echo "Removed $path"
+    else
+        echo "$path does not exist"
+    fi
+done

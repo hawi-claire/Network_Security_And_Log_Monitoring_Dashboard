@@ -2,7 +2,6 @@
 loki.write "default" {
   endpoint {
     url     = "http://localhost:3100/loki/api/v1/push"
-    timeout = "30s"
   }
 }
 
@@ -87,3 +86,27 @@ loki.source.kubernetes "pods" {
   forward_to = [loki.write.default.receiver]
 }
 */
+
+
+// PROMETHEUS
+prometheus.exporter.self "self_metrics" {
+}
+
+prometheus.scrape "self_scrape" {
+  targets    = prometheus.exporter.self.self_metrics.targets
+  forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+// Component to collect unix metrics.
+prometheus.exporter.unix "sys_metrics" { }
+
+prometheus.scrape "demo" {
+  targets    = prometheus.exporter.unix.sys_metrics.targets
+  forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+prometheus.remote_write "mimir" {
+  endpoint {
+    url = "http://localhost:9009/api/v1/push"
+  }
+}
