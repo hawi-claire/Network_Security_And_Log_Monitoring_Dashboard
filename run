@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# This script installs and integrates Grafana, Alloy, Loki and Mimir
+
+# *Pre-requisites
+# Get gpg keys and add grafana's apt repository
+sudo mkdir -p /etc/apt/keyrings/
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+
+sudo apt update -y
+
+# Required packages
+sudo apt install -y gpg
+sudo apt-get install -y unzip
+
+
+# Open these ports to access the dashboard out of server via http://ip-address:3000/
+sudo ufw allow 3000/tcp || echo "UFW command failed, continuing with the script..."
+sudo ufw allow 3100/tcp || echo "UFW command failed, continuing with the script..."
+sudo ufw allow 9009/tcp
+
+# *Grafana
+sudo apt-get install -y grafana
+
+# *Grafana Loki
+sudo apt-get install -y loki
+
+# Place loki config file where loki.service expects it to be
+sudo cp devops/config/loki/loki-local-config.yaml /etc/loki-local-config.yaml
+sudo cp devops/config/loki/loki.service /etc/systemd/system/
+
+while true; do
+    echo "If running grafana locally - use localhost, otherwise the loki machine ip-address"
+    read -rp "Enter your server IP address: " server_ip
+    read -rp "Confirm your server IP address: " confirm_ip
+
+    # Check if both IPs match
+    if [[ "$server_ip" == "$confirm_ip" ]]; then
+        echo "Server IP confirmed: $server_ip"
+        break
+    else
+        echo "IP addresses do not match. Please try again."
+    fi
+done
+
+echo "Proceeding with configuration for server IP: $server_ip"
+# Add server ip to loki config file so loki can be added as a data source
+# from this machine externally
+sudo sed -i "s|localhost|$server_ip|g" /etc/loki-local-config.yaml
+# Create a systemd service file for Loki to manage its execution
+
+
+# *Alloy
+sudo apt-get install -y alloy
+
+# Add alloy.service to setup how alloy starts 
+sudo cp devops/config/alloy/alloy.service /etc/systemd/system/
+sudo cp devops/config/alloy/config.alloy /etc/config.alloy
+
+
+# *Mimir
+# when adding mimir as a data source, use http://ip-address:9009/prometheus
+# Fetch mimir binary
+curl -fLo mimir "https://github.com/grafana/mimir/releases/latest/download/mimir-linux-amd64"
+
+chmod +x mimir
+sudo mv mimir /usr/bin/mimir
+
+sudo cp devops/config/mimir/mimir.service /etc/systemd/system/
+sudo cp devops/config/mimir/mimir-local-config.yaml /etc/mimir-local-config.yaml
+
+
+# *Reload the daemon and start services
+sudo systemctl daemon-reload
+sudo systemctl start 
+sudo systemctl enable grafana-server
+
+sudo systemctl start grafana-server loki mimir alloy
+sudo systemctl enable grafana-server loki mimir alloy
+# Check service status
+sudo systemctl status grafana-server loki mimir alloy

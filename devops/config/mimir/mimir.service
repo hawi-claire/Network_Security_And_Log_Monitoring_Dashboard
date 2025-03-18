@@ -1,0 +1,11 @@
+[Unit]
+Description=Alloy service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/mimir --config.file=/etc/mimir-local-config.yaml
+
+[Install]
+WantedBy=multi-user.target
