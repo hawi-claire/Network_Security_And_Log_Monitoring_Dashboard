@@ -30,7 +30,7 @@ sudo cp services/loki/loki-local-config.yaml /etc/loki-local-config.yaml
 sudo cp services/loki/loki.service /etc/systemd/system/
 
 while true; do
-    echo "If running grafana locally - use localhost, otherwise the loki machine ip-address"
+    echo "If running grafana UI locally - use localhost, otherwise the loki machine ip-address"
     read -rp "Enter your server IP address: " server_ip
     read -rp "Confirm your server IP address: " confirm_ip
 
