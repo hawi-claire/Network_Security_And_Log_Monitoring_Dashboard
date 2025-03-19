@@ -1,0 +1,60 @@
+s script installs GoAccess, sets up a systemd service for real-time monitoring, and ensures logs are accessible locally.
+
+# Install required packages
+sudo apt update && sudo apt install -y goaccess nginx xdg-utils
+
+# Ensure the /var/www/html directory exists
+sudo mkdir -p /var/www/html
+
+# Create systemd service for GoAccess
+echo "Creating GoAccess systemd service..."
+
+sudo bash -c 'cat > /etc/systemd/system/goaccess.service <<EOF
+[Unit]
+Description=GoAccess Real-Time Log Monitoring (Local Only)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/goaccess /var/log/nginx/access.log --log-format=COMBINED -o /var/www/html/monitoring-index.html --real-time-html
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+# Ensure the file is accessible
+sudo chmod 644 /var/www/html/monitoring-index.html
+sudo chown www-data:www-data /var/www/html/monitoring-index.html
+
+
+# Reload systemd, enable and start GoAccess service
+sudo systemctl daemon-reload
+sudo systemctl enable goaccess
+sudo systemctl start goaccess
+
+# Ensure Nginx serves the monitoring dashboard only on 127.0.0.1
+echo "Setting up Nginx for local access (127.0.0.1 only)..."
+
+# Create an Nginx config file for monitoring (local only)
+sudo bash -c 'cat > /etc/nginx/sites-available/monitoring <<EOF
+server {
+    listen 127.0.0.1:80;
+    server_name 127.0.0.1;
+
+    location /monitoring {
+        alias /var/www/html/monitoring-index.html;
+    }
+}
+EOF'
+
+# Enable the new site and restart Nginx
+sudo ln -sf /etc/nginx/sites-available/monitoring /etc/nginx/sites-enabled/
+sudo systemctl restart nginx
+
+# Open the monitoring dashboard in the default browser (only if running locally)
+if [[ "$DISPLAY" ]]; then
+    xdg-open "http://127.0.0.1/monitoring"
+else
+    echo "GoAccess is running as a systemd service. Access the logs at: http://127.0.0.1/monitoring"
+fi
