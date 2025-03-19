@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Script that setups dashboards
+
+# Grafana and provisioning directories paths
+GRAFANA_INI="/etc/grafana/grafana.ini"
+NEW_PROVISIONING_PATH="/etc/grafana/provisioning"
+
+# Uncommenting and setting the provisioning directory in grafana.ini
+sudo sed -i 's|^;provisioning = .*$|provisioning = '"$NEW_PROVISIONING_PATH"'|' $GRAFANA_INI
+
+# Moving the dashboards and config files to the appropriate locations
+sudo mkdir -p /var/lib/grafana/dashboards/
+sudo cp services/grafana/dashboards/* /var/lib/grafana/dashboards/
+sudo cp services/grafana/dashboards/default.yaml /etc/grafana/provisioning/dashboards
+sudo cp services/grafana/datasources/default.yaml /etc/grafana/provisioning/datasources
+
+# Restart grafana-server
+sudo systemctl daemon-reload
+sudo systemctl restart grafana-server
+echo "Dashboards up and ready!!!"
+echo "Go to - http://localhost:3000/dashboards to access them!!"

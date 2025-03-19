@@ -9,6 +9,9 @@ git clone https://github.com/hawi-claire/Network_Security_And_Log_Monitoring_Das
 # Command to run
 ./run 
 
+# To access preconfigured dashboards, run:
+./setup_dashboards
+
 # Command to uninstall all services
 ./unistall
 ```

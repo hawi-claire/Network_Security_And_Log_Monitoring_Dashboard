@@ -44,8 +44,10 @@ for config in "${config_files[@]}"; do
         echo "$path doesn't exist"
     fi
 done
-# Remove redudant data
-sudo rm -rf /tmp/loki /tmp/mimir
+
+# Remove redudant data and configurations
+sudo rm -rf /tmp/loki /tmp/mimir /tmp/grafana
+sudo rm -rf /etc/grafana /var/lib/grafana /var/lib/alloy
 
 # Old method
 oldies=("loki" "alloy" "mimir" "promtail")

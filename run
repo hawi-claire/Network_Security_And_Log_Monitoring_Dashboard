@@ -26,8 +26,8 @@ sudo apt-get install -y grafana
 sudo apt-get install -y loki
 
 # Place loki config file where loki.service expects it to be
-sudo cp devops/config/loki/loki-local-config.yaml /etc/loki-local-config.yaml
-sudo cp devops/config/loki/loki.service /etc/systemd/system/
+sudo cp services/loki/loki-local-config.yaml /etc/loki-local-config.yaml
+sudo cp services/loki/loki.service /etc/systemd/system/
 
 while true; do
     echo "If running grafana locally - use localhost, otherwise the loki machine ip-address"
@@ -54,8 +54,8 @@ sudo sed -i "s|localhost|$server_ip|g" /etc/loki-local-config.yaml
 sudo apt-get install -y alloy
 
 # Add alloy.service to setup how alloy starts 
-sudo cp devops/config/alloy/alloy.service /etc/systemd/system/
-sudo cp devops/config/alloy/config.alloy /etc/config.alloy
+sudo cp services/alloy/alloy.service /etc/systemd/system/
+sudo cp services/alloy/config.alloy /etc/config.alloy
 
 
 # *Mimir
@@ -66,8 +66,8 @@ curl -fLo mimir "https://github.com/grafana/mimir/releases/latest/download/mimir
 chmod +x mimir
 sudo mv mimir /usr/bin/mimir
 
-sudo cp devops/config/mimir/mimir.service /etc/systemd/system/
-sudo cp devops/config/mimir/mimir-local-config.yaml /etc/mimir-local-config.yaml
+sudo cp services/mimir/mimir.service /etc/systemd/system/
+sudo cp services/mimir/mimir-local-config.yaml /etc/mimir-local-config.yaml
 
 
 # *Reload the daemon and start services
