@@ -17,7 +17,7 @@ sudo apt-get install -y unzip
 # Open these ports to access the dashboard out of server via http://ip-address:3000/
 sudo ufw allow 3000/tcp || echo "UFW command failed, continuing with the script..."
 sudo ufw allow 3100/tcp || echo "UFW command failed, continuing with the script..."
-sudo ufw allow 9009/tcp
+sudo ufw allow 9009/tcp || echo "UFW command failed, continuing with the script..."
 
 # *Grafana
 sudo apt-get install -y grafana

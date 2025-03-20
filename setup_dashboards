@@ -13,7 +13,7 @@ sudo sed -i 's|^;provisioning = .*$|provisioning = '"$NEW_PROVISIONING_PATH"'|' 
 
 # Moving the dashboards and config files to the appropriate locations
 sudo mkdir -p /var/lib/grafana/dashboards/
-sudo cp services/grafana/dashboards/* /var/lib/grafana/dashboards/
+sudo cp services/grafana/dashboards/*.json /var/lib/grafana/dashboards/
 sudo cp services/grafana/dashboards/default.yaml /etc/grafana/provisioning/dashboards
 sudo cp services/grafana/datasources/default.yaml /etc/grafana/provisioning/datasources
 
