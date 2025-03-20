@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Runs tests
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}Starting LGTM Stack Test Suite${NC}"
+
+# Function to check if a command exists
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Check dependencies
+echo "Checking dependencies..."
+MISSING_DEPS=0
+
+for cmd in bats curl; do
+  if ! command_exists $cmd; then
+    echo -e "${RED}$cmd is not installed${NC}"
+    MISSING_DEPS=1
+  fi
+done
+
+if [ $MISSING_DEPS -eq 1 ]; then
+  echo -e "${RED}Please install missing dependencies${NC}"
+  exit 1
+fi
+
+#if ! python3 -c "import pytest_testinfra" 2>/dev/null; then
+#  echo "Installing TestInfra..."
+#  pip install pytest-testinfra
+#fi
+
+echo -e "\n${YELLOW}Running BATS tests...${NC}"
+echo "Input the IP the grafana-server can be reached by..."
+echo "If everything is going to be run locally, use localhost"
+read -p "Enter IP address: " TEST_IP
+echo ""
+
+TEST_IP=$TEST_IP bats -p tests/test_lgtm_services.bats
+
+#echo -e "\n${YELLOW}Running advanced tests...${NC}"
+#python3 -m pytest -v tests/test_lgtm_infra.py
+
+echo -e "${GREEN}All tests completed${NC}"

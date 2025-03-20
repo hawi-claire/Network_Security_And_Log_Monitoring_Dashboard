@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Script that setups dashboards
+
+sudo apt update -y
+sudo apt install -y xdg-utils
+
+# Grafana and provisioning directories paths
+GRAFANA_INI="/etc/grafana/grafana.ini"
+NEW_PROVISIONING_PATH="/etc/grafana/provisioning"
+
+# Uncommenting and setting the provisioning directory in grafana.ini
+sudo sed -i 's|^;provisioning = .*$|provisioning = '"$NEW_PROVISIONING_PATH"'|' $GRAFANA_INI
+
+# Moving the dashboards and config files to the appropriate locations
+sudo mkdir -p /var/lib/grafana/dashboards/
+sudo cp services/grafana/dashboards/*.json /var/lib/grafana/dashboards/
+sudo cp services/grafana/dashboards/default.yaml /etc/grafana/provisioning/dashboards
+sudo cp services/grafana/datasources/default.yaml /etc/grafana/provisioning/datasources
+
+# Restart grafana-server
+sudo systemctl daemon-reload
+sudo systemctl restart grafana-server
+
+while true; do
+    echo "If running grafana UI locally - use localhost, otherwise the loki machine ip-address"
+    read -rp "Enter your server IP address: " server_ip
+    read -rp "Confirm your server IP address: " confirm_ip
+
+    # Check if both IPs match
+    if [[ "$server_ip" == "$confirm_ip" ]]; then
+        echo "Server IP confirmed: $server_ip"
+        break
+    else
+        echo "IP addresses do not match. Please try again."
+    fi
+done
+
+echo ""
+echo "Dashboards up and ready!!!"
+xdg-open "http://$server_ip:3000/dashboards"
