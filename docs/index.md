@@ -1,111 +1,102 @@
 ---
 layout: default
-title: ServerGuard
+title: "NSLM"
 ---
 
-<header class="site-header">
-  <div class="container">
-    <a class="site-title" href="#">ServerGuard</a>
-    <nav class="site-nav">
-      <a href="#features">Features</a>
-      <a href="#about">About</a>
-      <a href="https://github.com/yourusername/serverguard" class="btn-primary">View on GitHub</a>
-    </nav>
-  </div>
-</header>
+<!-- Intro Section -->
+<section id="intro" class="py-16 bg-cover bg-center">
 
-<section class="hero">
-  <div class="container">
-    <h1>ServerGuard</h1>
-    <p class="tagline">Comprehensive network, security and log monitoring for Linux servers</p>
-    <a href="https://your-deployed-app-url.com" class="btn-cta">Launch Dashboard</a>
+  <div class="container mx-auto flex flex-col md:flex-row items-center justify-normal">
+      <!-- SVG Image (hidden on small screens) -->
+    <div class="w-3/5 ml-4 hidden md:block">
+      <img src="./assets/illus.svg" alt="SVG Illustration" class="w-auto h-auto" />
+    </div>
+
+    <!-- Text Content -->
+    <div class="text-center md:mr-12 md:text-left">
+      <h2 class="text-4xl font-bold text-black">Network security and log monitoring dashboards</h2>
+      <p class="text-xl text-black mt-4">Experience Instant Observability - Instant Monitoring</p>
+      <a target="_blank" href="https://github.com/hawi-claire/Network_Security_And_Log_Monitoring_Dashboard/blob/master/README.md" class="mt-8 inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+        Try It Now
+      </a>
+    </div>
   </div>
 </section>
 
-<section id="features" class="features">
-  <div class="container">
-    <h2>Key Features</h2>
-    
-    <div class="feature-item">
-      <div class="feature-image">
-        <img src="assets/images/network-monitoring.png" alt="Network Monitoring Dashboard">
+<!-- Feature Section -->
+<section id="features" class="py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-8">Key Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="bg-white p-6 rounded shadow">
+        <img src="./assets/dashboards.png" alt="Pre-configured Visualizations" class="w-full h-60 object-cover rounded" />
+        <h3 class="text-xl font-bold mt-4">Pre-configured Visualizations</h3>
+        <p class="mt-2">Ready-to-use dashboards for logs, metrics and traces (Coming soon!)</p>
       </div>
-      <div class="feature-content">
-        <h3>Network Monitoring</h3>
-        <p>Real-time visibility into network traffic, bandwidth utilization, and connection status. Identify bottlenecks and optimize performance with customizable alerts and thresholds.</p>
+      <!-- Feature 2 -->
+      <div class="bg-white p-6 rounded shadow">
+        <img src="./assets/live_dashboard.gif" alt="Real-Time Monitoring" class="w-full h-60 object-cover rounded" />
+        <h3 class="text-xl font-bold mt-4">Real-Time Monitoring</h3>
+        <p class="mt-2">Live updates with streaming data support</p>
       </div>
-    </div>
-    
-    <div class="feature-item">
-      <div class="feature-image">
-        <img src="assets/images/security-dashboard.png" alt="Security Dashboard">
-      </div>
-      <div class="feature-content">
-        <h3>Security Analytics</h3>
-        <p>Detect and respond to potential security threats with comprehensive monitoring of authentication attempts, firewall logs, and system access. Visualize attack patterns and secure your infrastructure.</p>
-      </div>
-    </div>
-    
-    <div class="feature-item">
-      <div class="feature-image">
-        <img src="assets/images/log-analysis.png" alt="Log Analysis Dashboard">
-      </div>
-      <div class="feature-content">
-        <h3>Centralized Logging</h3>
-        <p>Aggregate logs from multiple servers in one place for easy troubleshooting and analysis. Search, filter, and create alerts based on log patterns to catch issues before they impact users.</p>
+      <!-- Feature 3 -->
+      <div class="bg-white p-6 rounded shadow">
+        <img src="./assets/customizable.png" alt="Customizable panels" class="w-full h-60 object-cover rounded" />
+        <h3 class="text-xl font-bold mt-4">Customizable Panels</h3>
+        <p class="mt-2">Modify graphs, tables, and alerts to fit your needs.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="about" class="about">
-  <div class="container">
-    <h2>About ServerGuard</h2>
-    
-    <div class="about-content">
-      <h3>Our Story</h3>
-      <p>ServerGuard was born from a personal challenge I faced while managing a small cluster of web servers for a community project. After experiencing a security breach that went undetected for days, I realized the critical need for comprehensive monitoring that's both powerful and accessible.</p>
-      
-      <p>What started as a simple script to alert me of suspicious activities evolved into a full-featured monitoring solution built on the robust Grafana LGTM stack (Loki, Grafana, Tempo, Mimir). This project represents countless hours of research, coding, and testing to create a tool I wish I had when I first started managing servers.</p>
-      
-      <p>This project was developed as part of my <a href="https://www.alxafrica.com">ALX Software Engineering</a> portfolio, completed during a 3-week sprint in March 2025.</p>
-      
-      <h3>Connect With Me</h3>
-      <div class="team-links">
-        <a href="https://linkedin.com/in/yourusername" class="social-link">
-          <img src="assets/images/linkedin.svg" alt="LinkedIn">
-          LinkedIn
+<!-- About Section -->
+<section id="about" class="py-16 bg-gray-200">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-8">About</h2>
+    <div class="max-w-2xl mx-auto">
+      <p class="mb-4">
+        Developers shouldn’t waste hours firefighting production issues—they should be building. Traditional log monitoring is slow and reactive, leaving teams stuck in endless troubleshooting loops. Our dashboard changes that. With real-time insights and proactive alerts, we aim to empower developers to catch and fix issues before they escalate. Less stress, more innovation. Welcome to smarter log monitoring.
+      </p>
+      <p>Note: This a portfolio project for <a target="_blank" href="https://www.alx.com" class="text-blue-600 hover:underline">ALX</a>.
+      </p>
+      <p class="my-4">
+        Meet the team:
+      </p>
+      <ul class="space-y-2">
+        <li>
+          <strong>Lincoln Mihigo</strong> -
+          <a target="_blank" href="https://www.linkedin.com/in/LinMihigo" class="text-blue-600 hover:underline">LinkedIn</a> |
+          <a target="_blank" href="https://github.com/LinMihigo" class="text-blue-600 hover:underline">GitHub</a> |
+          <a target="_blank" href="https://twitter.com/LinMihigo" class="text-blue-600 hover:underline">Twitter</a>
+        </li>
+        <li>
+          <strong>Hawi Claire</strong> -
+          <a target="_blank" href="https://www.linkedin.com/in/team2" class="text-blue-600 hover:underline">LinkedIn</a> |
+          <a target="_blank" href="https://github.com/Hawi-Claire" class="text-blue-600 hover:underline">GitHub</a> |
+          <a target="_blank" href="https://twitter.com/team2" class="text-blue-600 hover:underline">Twitter</a>
+        </li>
+        <li>
+          <strong>Martian Odhiambo</strong> -
+          <a target="_blank" href="https://www.linkedin.com/in/team2" class="text-blue-600 hover:underline">LinkedIn</a> |
+          <a target="_blank" href="https://github.com/Hawi-Claire" class="text-blue-600 hover:underline">GitHub</a> |
+          <a target="_blank" href="https://twitter.com/team2" class="text-blue-600 hover:underline">Twitter</a>
+        </li>
+        <!-- Add additional team members as needed -->
+      </ul>
+      <p class="mt-10 text-center">
+        <a target="_blank" href="https://github.com/hawi-claire/Network_Security_And_Log_Monitoring_Dashboard/tree/master" class="inline-block bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">
+          View GitHub Repository
         </a>
-        <a href="https://github.com/yourusername" class="social-link">
-          <img src="assets/images/github.svg" alt="GitHub">
-          GitHub
-        </a>
-        <a href="https://twitter.com/yourusername" class="social-link">
-          <img src="assets/images/twitter.svg" alt="Twitter">
-          Twitter
-        </a>
-      </div>
-      
-      <div class="project-links">
-        <a href="https://github.com/yourusername/serverguard" class="btn-secondary">View Source Code</a>
-      </div>
+      </p>
     </div>
   </div>
 </section>
 
-{% if site.video_url %}
-<section class="video-section">
-  <div class="container">
-    <h2>Watch ServerGuard in Action</h2>
-    <div class="video-container">
-      <iframe src="{{ site.video_url }}" frameborder="0" allowfullscreen></iframe>
-    </div>
+<!-- Optional Video Section -->
+<section id="video" class="py-16">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-8">Project Demo Video</h2>
+      <div style="position: relative; padding-bottom: 56.19146722164412%; height: 0;"><iframe src="https://www.loom.com/embed/89ca9b4445574103aa859340c67b0933?sid=d40b2c7a-06ff-4188-ab50-2a401126bb17" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   </div>
 </section>
-{% endif %}
-
-<footer class="site-footer">
-  <div class="container">
-    <p>&copy; 2025 ServerGuard | Built with ❤️ by <a href="https://github.com/yourusername">Your Name</a></p>
-  </div>
-</footer>
