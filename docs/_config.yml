@@ -1,0 +1,25 @@
+# Site settings
+title: ServerGuard
+description: Comprehensive network, security and log monitoring for Linux servers
+baseurl: "/nslm" # the subpath of your site, e.g. /blog
+url: "https://linmihigo.github.io/" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Optional video URL (uncomment to enable video section)
+# video_url: https://www.youtube.com/embed/your-video-id
+
+# Social links (update with your actual profiles)
+github_username: yourusername
+twitter_username: yourusername
+linkedin_username: yourusername
+
+# Additional files to include
+include:
+  - assets
+  - _pages
+
+# If you want to use a theme, uncomment and specify it here
+# theme: minima
