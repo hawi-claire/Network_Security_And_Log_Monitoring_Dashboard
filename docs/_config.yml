@@ -1,0 +1,6 @@
+# _config.yml
+title: "NSLM"
+description: "A network, security, and log monitoring dashboard for Linux remote servers"
+# You can customize other Jekyll settings as needed
+url: "https://linmihigo.github.io/"
+baseurl: "/nslm"
