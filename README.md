@@ -11,13 +11,15 @@ Core components, used in this project, include:
 
 ### Demo
 
-- [Project demo](https://hawi-claire.github.io/Network_Security_And_Log_Monitoring_Dashboard/#video)
+- [Project demo video](https://hawi-claire.github.io/Network_Security_And_Log_Monitoring_Dashboard/#video)
 
 ### Features
 
 - **Automated Setup:** Installs and configures the entire LGTM stack with minimal effort.
 - **Preconfigured Dashboards:** Comes with example dashboard JSON templates to visualize your logs, metrics, and traces.
+
 ![Preconfigured Dashboards](docs/assets/dashboards.png)
+
 - **Data Source Provisioning:** Automatically sets up key data sources using Grafana’s provisioning mechanism.
 - **Alloy Configuration:** Includes guidance for configuring Grafana Alloy to process and route telemetry data.
 - **Extensible Design:** Easily customize dashboards, add new data sources, or modify configuration files to tailor the stack to your needs.
