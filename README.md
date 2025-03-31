@@ -1,6 +1,6 @@
 # LGTM Stack Deployment Package
 
-## Stack Overview
+## Introduction
 
 The LGTM (Loki, Grafana, Alloy, Mimir) stack provides comprehensive observability:
 - **Loki**: Log aggregation
@@ -8,7 +8,7 @@ The LGTM (Loki, Grafana, Alloy, Mimir) stack provides comprehensive observabilit
 - **Alloy**: Collection agent
 - **Mimir**: Metrics storage
 
-## Features
+### Features
 
 - **Automated Setup:** Installs and configures the entire LGTM stack with minimal effort.
 - **Preconfigured Dashboards:** Comes with example dashboard JSON templates to visualize your logs, metrics, and traces.
@@ -16,13 +16,13 @@ The LGTM (Loki, Grafana, Alloy, Mimir) stack provides comprehensive observabilit
 - **Alloy Configuration:** Includes guidance for configuring Grafana Alloy to process and route telemetry data.
 - **Extensible Design:** Easily customize dashboards, add new data sources, or modify configuration files to tailor the stack to your needs.
 
-## Quick Start
+## Installation
 
 1. Prerequisites
    - Ubuntu >= 20.04
    - Ideally >= 2GB RAM
 
-2. Installation & Usage
+2. Getting started (Installation & Usage)...
 
 ```bash
 # Git clone repo and cd into it
@@ -41,7 +41,7 @@ tests/testrunner
 ./uninstall
 ```
 
-## Customization Guides
+## Usage (Customization Guides)
 
 To customize the pre-configured dashboards and data sources, check the services directory in this repo. Once done with modifications, remember to `cp` them to the appropriate directories and restart the concerned service.
 
@@ -118,3 +118,11 @@ prometheus.scrape "default" {
 ## Contributing
 
 Contributions are welcome. Submit PRs or open issues with detailed descriptions.
+
+## Related projects
+
+- [Docker-otel-lgtm docker image](https://github.com/grafana/docker-otel-lgtm)
+
+## Licensing
+
+This project is licensed under the [MIT License](LICENSE).
